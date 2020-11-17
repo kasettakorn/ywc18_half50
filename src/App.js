@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tag, Col, Input, Layout, Radio, Row, Select, Breadcrumb } from "antd";
+import { Tag, Col, Input, Layout, Radio, Row, Select, Breadcrumb, Rate } from "antd";
 import { PushpinFilled } from '@ant-design/icons';
 import "antd/dist/antd.css";
 import './styles/style.css';
@@ -17,7 +17,7 @@ export default class App extends Component {
     super(props);
     this.state = {
       shopType: -1,
-      privince: null,
+      province: null,
       priceRange: null,
       subType: null
     }
@@ -59,7 +59,7 @@ export default class App extends Component {
       lineHeight: "30px",
     };
     return (
-      <Layout style={{backgroundColor:"transparent"}}>
+      <Layout style={{backgroundColor:"transparent", padding:"20px"}}>
         <Header style={{ backgroundColor: "transparent" }}>
             <Row >
                 <Col span={4}>
@@ -141,15 +141,18 @@ export default class App extends Component {
             
           </Sider>
           <Content style={{marginLeft:"50px"}}>
-              
-              {data.merchants.map(merchant => {
-                  return (<div><Row style={{backgroundColor:"white", border:"0.5px solid gray", padding:"10px"}}>
-                <Col xs={8} xl={8}>
-                   <img width={250} height={250} src={merchant.coverImageId} alt="coverID" />
+              {data.merchants.filter(merchant => 
+              merchant.subcategoryName === this.state.subType 
+              || this.state.shopType === -1).map(merchant => {
+                  return (<div><Row gutter={16} style={{backgroundColor:"white", border:"0.5px solid gray", padding:"10px"}}>
+                <Col lg={6}  md={9} sm={24}>
+                   <img src={merchant.coverImageId} alt="coverID" style={{objectFit:"cover", width:"100%", height:"200px"}} />
                 </Col>
-                <Col xs={16} xl={16}>
+                <Col lg={18} md={15} sm={24}>
                   <span>{merchant.shopNameTH} {merchant.isOpen === 'Y' ? <Tag color="green">เปิดอยู่</Tag> : <Tag color="gray">ปิดแล้ว</Tag>}  </span>
-                  <p>{merchant.subcategoryName} | {merchant.addressDistrictName + " " + merchant.addressProvinceName}</p><hr/>
+                  <p>{merchant.subcategoryName} | {merchant.addressDistrictName + " " + merchant.addressProvinceName}</p>
+                  <Rate character="฿" value={merchant.priceLevel} style={{color:"gray"}} disabled/><hr/>
+                  <p>สินค้าแนะนำ : {merchant.recommendedItems.map(item => { return item + " ";})}</p>
                 </Col>
 
             </Row><br/></div>);
