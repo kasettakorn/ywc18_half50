@@ -223,12 +223,12 @@ export default class App extends Component {
           </Sider>
           <Content style={{ marginLeft: "50px" }}>
             {data.merchants
-              // .filter(
-              //   (merchant) =>
-              //     merchant.subcategoryName === this.state.subType &&
-              //     merchant.addressProvinceName === this.state.province 
+              .filter(
+                (merchant) =>
+                  merchant.subcategoryName === this.state.subType &&
+                  merchant.addressProvinceName === this.state.province 
              
-              // )
+              )
               .map((merchant) => {
                 return (
                   <Merchant 
