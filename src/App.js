@@ -14,10 +14,10 @@ import { PushpinFilled } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import "./styles/style.css";
 import "./index.css";
-import data from "./data/store.json";
 import logo from "./assets/halfhalf-logo.png";
 import miniLogo from "./assets/halfhalf-logo-mini.png";
 import Search from "antd/lib/input/Search";
+import Merchant from "./components/Merchant";
 
 const { Header, Sider, Content } = Layout;
 const { Option } = Select;
@@ -29,6 +29,7 @@ export default class App extends Component {
       province: null,
       priceRange: null,
       subType: null,
+      data: null,
     };
     this.handleShopTypeChange = this.handleShopTypeChange.bind(this);
     this.handleProvinceChange = this.handleProvinceChange.bind(this);
@@ -60,12 +61,32 @@ export default class App extends Component {
     });
   };
 
+  componentDidMount = async () => {
+    fetch('https://panjs.com/ywc18.json')
+      .then(response => response.json())
+      .then((json) => {
+        console.log(json);
+        this.setState({
+          data: json
+        })
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+      
+  }
+  
+
   render() {
+    const { data } = this.state;
     const radioStyle = {
       display: "block",
       height: "30px",
       lineHeight: "30px",
     };
+    if(!data) {
+      return <p>Loading ...</p>
+    }
     return (
       <Layout style={{ backgroundColor: "transparent" }}>
         <Header style={{ backgroundColor: "transparent" }}>
@@ -202,65 +223,24 @@ export default class App extends Component {
           </Sider>
           <Content style={{ marginLeft: "50px" }}>
             {data.merchants
-              .filter(
-                (merchant) =>
-                  merchant.subcategoryName === this.state.subType ||
-                  merchant.addressProvinceName === this.state.province
-              )
+              // .filter(
+              //   (merchant) =>
+              //     merchant.subcategoryName === this.state.subType &&
+              //     merchant.addressProvinceName === this.state.province 
+             
+              // )
               .map((merchant) => {
                 return (
-                  <div>
-                    <Row
-                      gutter={16}
-                      style={{
-                        backgroundColor: "white",
-                        border: "0.5px solid gray",
-                        padding: "10px",
-                      }}
-                    >
-                      <Col lg={6} md={9} sm={24}>
-                        <img
-                          src={merchant.coverImageId}
-                          alt="coverID"
-                          style={{
-                            objectFit: "cover",
-                            width: "100%",
-                            height: "200px",
-                          }}
-                        />
-                      </Col>
-                      <Col lg={18} md={15} sm={24}>
-                        <span>
-                          {merchant.shopNameTH}{" "}
-                          {merchant.isOpen === "Y" ? (
-                            <Tag color="green">เปิดอยู่</Tag>
-                          ) : (
-                            <Tag color="gray">ปิดแล้ว</Tag>
-                          )}{" "}
-                        </span>
-                        <p>
-                          {merchant.subcategoryName} |{" "}
-                          {merchant.addressDistrictName +
-                            " " +
-                            merchant.addressProvinceName}
-                        </p>
-                        <Rate
-                          character="฿"
-                          value={merchant.priceLevel}
-                          style={{ color: "gray" }}
-                          disabled
-                        />
-                        <hr />
-                        <p>
-                          สินค้าแนะนำ :{" "}
-                          {merchant.recommendedItems.map((item) => {
-                            return item + " ";
-                          })}
-                        </p>
-                      </Col>
-                    </Row>
-                    <br />
-                  </div>
+                  <Merchant 
+                    coverImageId={merchant.coverImageId} 
+                    shopNameTH={merchant.shopNameTH} 
+                    isOpen={merchant.isOpen}
+                    subcategoryName={merchant.subcategoryName}
+                    addressDistrictName={merchant.addressDistrictName}
+                    addressProvinceName={merchant.addressProvinceName}
+                    priceLevel={merchant.priceLevel}
+                    recommendedItems={merchant.recommendedItems}
+                    />
                 );
               })}
           </Content>
