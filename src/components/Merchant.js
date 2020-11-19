@@ -11,6 +11,7 @@ export default class Merchant extends Component {
       addressProvinceName,
       priceLevel,
       recommendedItems,
+      facilities
     } = this.props;
     return (
       <div>
@@ -44,21 +45,34 @@ export default class Merchant extends Component {
             </span>
             <p>
               {subcategoryName} |{" "}
-              {addressDistrictName +
-                " " +
-                addressProvinceName}
+              <Rate
+                character="฿"
+                value={priceLevel}
+                style={{ color: "gray" }}
+                disabled
+              />{" "}
+              | {addressDistrictName + " " + addressProvinceName}
             </p>
-            <Rate
-              character="฿"
-              value={priceLevel}
-              style={{ color: "gray" }}
-              disabled
-            />
+
             <hr />
             <p>
-              สินค้าแนะนำ :{" "}
-              {recommendedItems.map((item) => {
-                return item + " ";
+              เมนูแนะนำ :{" "}
+              {recommendedItems.map((item, i) => {
+                if (i == recommendedItems.length - 1) {
+                  return item;
+                } else {
+                  return item + ", ";
+                }
+              })}
+            </p>
+            <p>
+              สิ่งอำนายความสะดวก :{" "}
+              {facilities.map((item, i) => {
+                if (i == facilities.length - 1) {
+                  return item;
+                } else {
+                  return item + ", ";
+                }
               })}
             </p>
           </Col>

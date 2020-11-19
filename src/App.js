@@ -26,7 +26,7 @@ export default class App extends Component {
     super(props);
     this.state = {
       shopType: -1,
-      province: null,
+      province: "กรุงเทพมหานคร",
       priceRange: null,
       subType: null,
       data: null,
@@ -168,7 +168,7 @@ export default class App extends Component {
               })}
             </Radio.Group>
             <Select
-              defaultValue="พื้นที่ใกล้ฉัน"
+              defaultValue="กรุงเทพมหานคร"
               style={{ width: "100%" }}
               onChange={this.handleProvinceChange}
             >
@@ -240,6 +240,7 @@ export default class App extends Component {
                     addressProvinceName={merchant.addressProvinceName}
                     priceLevel={merchant.priceLevel}
                     recommendedItems={merchant.recommendedItems}
+                    facilities={merchant.facilities}
                     />
                 );
               })}
