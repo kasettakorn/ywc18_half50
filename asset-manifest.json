@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/ywc18_half50/static/css/main.d444cae3.chunk.css",
-    "main.js": "/ywc18_half50/static/js/main.c633c39d.chunk.js",
-    "main.js.map": "/ywc18_half50/static/js/main.c633c39d.chunk.js.map",
+    "main.css": "/ywc18_half50/static/css/main.b473a022.chunk.css",
+    "main.js": "/ywc18_half50/static/js/main.ef949c28.chunk.js",
+    "main.js.map": "/ywc18_half50/static/js/main.ef949c28.chunk.js.map",
     "runtime-main.js": "/ywc18_half50/static/js/runtime-main.3ecdf0fb.js",
     "runtime-main.js.map": "/ywc18_half50/static/js/runtime-main.3ecdf0fb.js.map",
     "static/css/2.e4b939f5.chunk.css": "/ywc18_half50/static/css/2.e4b939f5.chunk.css",
@@ -12,14 +12,14 @@
     "static/js/3.a861c052.chunk.js.map": "/ywc18_half50/static/js/3.a861c052.chunk.js.map",
     "index.html": "/ywc18_half50/index.html",
     "static/css/2.e4b939f5.chunk.css.map": "/ywc18_half50/static/css/2.e4b939f5.chunk.css.map",
-    "static/css/main.d444cae3.chunk.css.map": "/ywc18_half50/static/css/main.d444cae3.chunk.css.map",
+    "static/css/main.b473a022.chunk.css.map": "/ywc18_half50/static/css/main.b473a022.chunk.css.map",
     "static/js/2.99174447.chunk.js.LICENSE.txt": "/ywc18_half50/static/js/2.99174447.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.3ecdf0fb.js",
     "static/css/2.e4b939f5.chunk.css",
     "static/js/2.99174447.chunk.js",
-    "static/css/main.d444cae3.chunk.css",
-    "static/js/main.c633c39d.chunk.js"
+    "static/css/main.b473a022.chunk.css",
+    "static/js/main.ef949c28.chunk.js"
   ]
 }
