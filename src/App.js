@@ -9,8 +9,9 @@ import {
   Select,
   Breadcrumb,
   Rate,
+  Button,
 } from "antd";
-import { PushpinFilled } from "@ant-design/icons";
+import { MenuFoldOutlined, MenuUnfoldOutlined, PushpinFilled } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import "./styles/style.css";
 import "./index.css";
@@ -30,12 +31,21 @@ export default class App extends Component {
       priceRange: null,
       subType: null,
       data: null,
+      collapsed: false,
     };
+    this.toggle = this.toggle.bind(this);
     this.handleShopTypeChange = this.handleShopTypeChange.bind(this);
     this.handleProvinceChange = this.handleProvinceChange.bind(this);
     this.handlePriceRangeChange = this.handlePriceRangeChange.bind(this);
     this.handleSubTypeChange = this.handleSubTypeChange.bind(this);
   }
+
+  toggle = () => {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    });
+  };
+
 
   handleShopTypeChange = (e) => {
     this.setState({
@@ -95,11 +105,11 @@ export default class App extends Component {
               <img className="full-logo" src={logo} alt="logo" />
               <img className="mini-logo" src={miniLogo} alt="minilogo" />
             </Col>
-            <Col md={19} style={{marginTop:"20px"}}>
+            <Col md={19} style={{ marginTop: "20px" }}>
               <Input.Group compact>
                 <Select
-                  defaultValue="พื้นที่ใกล้ฉัน"
-                  style={{ width: "15%" }}
+                  defaultValue="กรุงเทพมหานคร"
+                  style={{ width: "15vw" }}
                   onChange={this.handleProvinceChange}
                 >
                   <Option key="พื้นที่ใกล้ฉัน" value="พื้นที่ใกล้ฉัน">
@@ -117,7 +127,7 @@ export default class App extends Component {
                   })}
                 </Select>
                 <Search
-                  style={{ width: "85%" }}
+                  style={{ width: "50vw"  }}
                   placeholder="ค้นหาชื่อ ร้านอาหาร และเครื่องดื่ม"
                 />
               </Input.Group>
@@ -144,9 +154,14 @@ export default class App extends Component {
             padding: "15px",
           }}
         >
+          
+
           <Sider
             id="sider"
             width={300}
+            trigger={null}
+            collapsible
+            collapsed={this.state.collapsed}
             style={{
               height: "max-content",
               backgroundColor: "white",
@@ -155,8 +170,8 @@ export default class App extends Component {
             }}
           >
             <div>ประเภทร้านค้า</div>
-            <Radio.Group onChange={this.handleShopTypeChange}>
-              <Radio key={-1} style={radioStyle} value={-1}>
+            <Radio.Group defaultValue={-1}  onChange={this.handleShopTypeChange}>
+              <Radio  key={-1} style={radioStyle} value={-1}>
                 ทั้งหมด
               </Radio>
               {data.categories.map((category, index) => {
@@ -225,15 +240,15 @@ export default class App extends Component {
             {data.merchants
               .filter(
                 (merchant) =>
-                  merchant.subcategoryName === this.state.subType &&
-                  merchant.addressProvinceName === this.state.province 
-             
+                this.state.shopType === -1 ||
+                  (merchant.subcategoryName === this.state.subType &&
+                  merchant.addressProvinceName === this.state.province)
               )
               .map((merchant) => {
                 return (
-                  <Merchant 
-                    coverImageId={merchant.coverImageId} 
-                    shopNameTH={merchant.shopNameTH} 
+                  <Merchant
+                    coverImageId={merchant.coverImageId}
+                    shopNameTH={merchant.shopNameTH}
                     isOpen={merchant.isOpen}
                     subcategoryName={merchant.subcategoryName}
                     addressDistrictName={merchant.addressDistrictName}
@@ -241,7 +256,7 @@ export default class App extends Component {
                     priceLevel={merchant.priceLevel}
                     recommendedItems={merchant.recommendedItems}
                     facilities={merchant.facilities}
-                    />
+                  />
                 );
               })}
           </Content>
